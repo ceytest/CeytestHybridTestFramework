@@ -3,4 +3,6 @@ target/
 /src/test/resources/parallel/features/
 /src/test/java/parallel/
 /src/test/output
-spring-cucumber.iml
+*.iml
+/src/test/resources/com/ceytest/drivers/*
+/src/test/resources/com/ceytest/mobile/apps/*
