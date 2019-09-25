@@ -1,7 +1,5 @@
 target/
 .idea/**
-/src/test/resources/parallel/features/
-/src/test/java/parallel/
 /src/test/output
 *.iml
 /src/test/resources/com/ceytest/drivers/*

@@ -8,6 +8,19 @@
     <artifactId>ceytest-hybrid-test-framework</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.failsafe.plugin.version>3.0.0-M3</maven.failsafe.plugin.version>
+        <maven.build.helper.plugin.version>3.0.0</maven.build.helper.plugin.version>
+        <cucumber.version>4.7.2</cucumber.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <cucable.version>1.5.1</cucable.version>
+        <source.Runner.TemplateFile>src/test/java/com/ceytest/runner/Runner.java</source.Runner.TemplateFile>
+        <source.Features>src/test/resources/Features</source.Features>
+        <generated.runner.directory>${project.build.directory}/parallel/runners</generated.runner.directory>
+        <generated.feature.directory>${project.build.directory}/parallel/Features</generated.feature.directory>
+    </properties>
     <dependencies>
         <!-- appium & Selenium -->
         <dependency>
@@ -21,16 +34,23 @@
             <version>3.141.59</version>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.0.0</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
 <!--        <dependency>-->
-<!--            <groupId>io.cucumber</groupId>-->
-<!--            <artifactId>cucumber-spring</artifactId>-->
-<!--            <version>4.7.2</version>-->
+<!--            <groupId>org.testng</groupId>-->
+<!--            <artifactId>testng</artifactId>-->
+<!--            <version>7.0.0</version>-->
+<!--            <scope>test</scope>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -46,7 +66,158 @@
             <artifactId>cucumber-testng</artifactId>
             <version>4.7.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>4.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.trivago.rta</groupId>
+                <artifactId>cucable-plugin</artifactId>
+                <version>${cucable.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-test-resources</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>parallel</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- This can be either a Java class file or a text based template -->
+                    <sourceRunnerTemplateFile>${source.Runner.TemplateFile}</sourceRunnerTemplateFile>
+                    <!--<sourceRunnerTemplateFile>src/test/resources/cucable.template</sourceRunnerTemplateFile>-->
 
+                    <!-- process all features in the given directory -->
+                    <sourceFeatures>${source.Features}</sourceFeatures>
+
+                    <!-- process a specific feature file in the given directory -->
+                    <!--<sourceFeatures>src/test/resources/features/testfeature/MyTest9.feature</sourceFeatures>-->
+
+                    <!-- process multiple feature files -->
+                    <!--<sourceFeatures>-->
+                    <!--src/test/resources/features/testfeature2,-->
+                    <!--src/test/resources/features/testfeature/MyTest8.feature-->
+                    <!--</sourceFeatures>-->
+
+                    <!-- process a specific feature file and specific line numbers in the given directory -->
+                    <!--<sourceFeatures>src/test/resources/features/testfeature/MyTest1.feature:8:19</sourceFeatures>-->
+
+                    <generatedFeatureDirectory>${generated.feature.directory}</generatedFeatureDirectory>
+                    <generatedRunnerDirectory>${generated.runner.directory}</generatedRunnerDirectory>
+
+                    <!-- optional: custom data that is available in Cucable placeholders in a template -->
+                    <!--<customPlaceholders>-->
+                    <!--<comment>This should appear inside the template</comment>-->
+                    <!--</customPlaceholders>-->
+
+                    <!-- optional: Cucumber tag expression to include or exclude scenarios with certain tags (see https://docs.cucumber.io/cucumber/api/#tag-expressions) -->
+                    <!--<includeScenarioTags>@scenario1Tag1</includeScenarioTags>-->
+                    <!--<includeScenarioTags>not @skipMe</includeScenarioTags>-->
+                    <!--<includeScenarioTags>(@scenario1Tag1 or @scenario1Tag2) and not @skipMe</includeScenarioTags>-->
+
+                    <!-- optional: change parallelization mode of Cucable (default: 'scenarios')-->
+                    <!--<parallelizationMode>scenarios</parallelizationMode>-->
+                    <!--<parallelizationMode>features</parallelizationMode>-->
+
+                    <!-- optional: number of test runs to create runners and features multiple times
+                         if set to a number greater than 1 -->
+                    <!--<numberOfTestRuns>1</numberOfTestRuns>-->
+
+                    <!-- optional: generate a fixed number of runners and distribute all features round-robin.
+                     This can only be used if desiredNumberOfFeaturesPerRunner is NOT used! -->
+                    <!--<desiredNumberOfRunners>2</desiredNumberOfRunners>-->
+
+                    <!-- optional: distribute a fixed number features per runner round-robin.
+                    This can only be used if desiredNumberOfRunners is NOT used! -->
+                    <!--<desiredNumberOfFeaturesPerRunner>4</desiredNumberOfFeaturesPerRunner>-->
+
+                    <!-- optional: Cucable log level -->
+                    <!--<logLevel>default</logLevel>-->
+                    <!--<logLevel>compact</logLevel>-->
+                    <!--<logLevel>minimal</logLevel>-->
+                    <!--<logLevel>off</logLevel>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${maven.build.helper.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${generated.runner.directory}</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>Run parallel tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <forkCount>3</forkCount>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+            </plugin>
+            <plugin>
+                <groupId>com.trivago.rta</groupId>
+                <artifactId>cluecumber-report-plugin</artifactId>
+                <version>2.0.1</version>
+                <executions>
+                    <execution>
+                        <id>report</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>reporting</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceJsonReportDirectory>${project.build.directory}/cucumber-report</sourceJsonReportDirectory>
+                    <generatedHtmlReportDirectory>${project.build.directory}/generated-report
+                    </generatedHtmlReportDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -87,7 +87,7 @@ public class AppiumBaseTest {
     public void cleenUp () {
 
 //        driver.close();
-        driver.quit();
+       // driver.quit();
 
 
     }
