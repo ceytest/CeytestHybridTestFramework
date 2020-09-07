@@ -2,5 +2,5 @@ target/
 .idea/**
 /src/test/output
 *.iml
-/src/test/resources/com/ceytest/drivers/*
-/src/test/resources/com/ceytest/mobile/apps/*
+src/test/resources/drivers/*
+src/test/resources/mobileApps/*
