@@ -1,3 +1,4 @@
+/*
 package com.ceytest.tests.mobile;
 
 import io.appium.java_client.AppiumDriver;
@@ -92,3 +93,4 @@ public class AppiumBaseTest {
 
     }
 }
+*/

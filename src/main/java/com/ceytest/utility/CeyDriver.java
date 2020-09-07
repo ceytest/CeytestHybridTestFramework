@@ -17,7 +17,7 @@ public class CeyDriver  {
     protected WebDriver driver;
 
     public CeyDriver(WebDriver driver){
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver");
         driver=new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         this.driver = driver;

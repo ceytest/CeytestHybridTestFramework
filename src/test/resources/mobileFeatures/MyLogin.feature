@@ -1,8 +1,8 @@
-Feature: Booking.com login features
-
-  Scenario: SignUp for Booking.com
-    Given user in the home page
-    When user clicks menu button
+#Feature: Booking.com login features
+#
+#  Scenario: SignUp for Booking.com
+#    Given user in the home page
+#    When user clicks menu button
 #    And click on Sign In or Create Account
 #    Then user lands to signUp page
 #    And user have the options of

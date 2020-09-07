@@ -1,3 +1,4 @@
+/*
 package com.ceytest.stepDefs.mobile;
 
 import io.cucumber.java.en.When;
@@ -8,3 +9,4 @@ public class SignUpSteps {
         System.out.printf("SignUp Ok");
     }
 }
+*/

@@ -7,24 +7,14 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
+
 @RunWith(Cucumber.class)
 @CucumberOptions(
         glue = "steps",
+        strict = true,
         features = {"target/parallel/features/[CUCABLE:FEATURE].feature"},
         plugin = {"json:target/cucumber-report/[CUCABLE:RUNNER].json"}
 )
 public class Runner {
     // [CUCABLE:CUSTOM:comment]
-    @After
-    public void cleanUp() {
-        System.out.println("Clean Up...");
-        //.manage().deleteAllCookies();
-    }
-
-    @After
-    public void tearDown() {
-        System.out.println("Tear Down...");
-        //driver.close();
-    }
 }
-

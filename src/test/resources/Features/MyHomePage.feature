@@ -1,6 +1,6 @@
 Feature: Booking com home page scenarios
 
-  @smoke
+@smoke
   Scenario:User search for a hotel
     Given user landed to the home page
     When user enters destination as Ella
